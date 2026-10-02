@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dice</title>
+    <script src="js/dice.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="dice-container">
+        <div class="dice"></div>
+        <div class="dice"></div>
+        <div class="dice"></div>
+        <div class="dice"></div>
+        <div class="dice"></div>
+      </div>
+      <div class="controls">
+        <button id="rollBtn" onclick="rollDice()">Roll</button>
+      </div>
+    </div>
+    <p id="roll-total">Roll Total:  <span id="display-total"></span></p>
+    <p id="game-total">Total points:  <span id="total-points"></span></p>
+<!--\========================================================================================================\-->
+<!--\++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\-->
+<!--\========================================================================================================\-->
+    <script>
+      const diceContainers = document.querySelectorAll(".dice"); //get all elements with class of dice
+      let displayInfo = document.getElementById("display-total");
+      let totalPoints = document.getElementById("total-points");
+      let points = 0;
+      let dice = [];
+      diceContainers.forEach((di, idx) => {
+        // di is the current dice html element in the array
+        // idx is the index of t he array
+        dice.push(new Dice(di));
+      });
+
+      //   function rollDice() {
+      //     console.log(calculateDiceTotal());
+      //     for (let d of dice) {
+      //     }
+      //     dice.forEach((d) => {
+      //       d.roll();
+      //     });
+      //   }
+      function calculateDiceTotal() {
+        total = 0;
+        //log the sum of all the dice:
+        for (let d of dice) {
+          total += d.value;
+        }
+        displayInfo.innerHTML = total;
+        points += total;
+        totalPoints.innerHTML = points;
+        return total;
+      }
+
+      async function rollDice() {
+        let rolls = [];
+        for (let d of dice) {
+          rolls.push(d.roll());
+        }
+        //await - requires being run in an async environment
+        await Promise.all(rolls);
+        console.log(calculateDiceTotal());
+      }
+    </script>
+  </body>
+</html>
