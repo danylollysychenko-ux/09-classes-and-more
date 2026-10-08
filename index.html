@@ -18,17 +18,19 @@
       </div>
       <div class="controls">
         <button id="rollBtn" onclick="rollDice()">Roll</button>
+        <button id="resetBtn" onclick="resetPoints()">Reset</button>
       </div>
     </div>
-    <p id="roll-total">Roll Total:  <span id="display-total"></span></p>
-    <p id="game-total">Total points:  <span id="total-points"></span></p>
-<!--\========================================================================================================\-->
-<!--\++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\-->
-<!--\========================================================================================================\-->
+    <p id="roll-total">Roll Total: <span id="display-total"></span></p>
+    <p id="game-total">Total points: <span id="total-points"></span></p>
+    <!--\========================================================================================================\-->
+    <!--\++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\-->
+    <!--\========================================================================================================\-->
     <script>
       const diceContainers = document.querySelectorAll(".dice"); //get all elements with class of dice
       let displayInfo = document.getElementById("display-total");
       let totalPoints = document.getElementById("total-points");
+      let resetBtn = document.getElementById("resetBtn");
       let points = 0;
       let dice = [];
       diceContainers.forEach((di, idx) => {
@@ -45,6 +47,12 @@
       //       d.roll();
       //     });
       //   }
+      function resetPoints() {
+        points = 0;
+        total = 0;
+        totalPoints.innerHTML = 0;
+        displayInfo.innerHTML = 0;
+      }
       function calculateDiceTotal() {
         total = 0;
         //log the sum of all the dice:
@@ -54,6 +62,10 @@
         displayInfo.innerHTML = total;
         points += total;
         totalPoints.innerHTML = points;
+
+        winConditions(points);
+        addPoints(points);
+        subtractPoints(points);
         return total;
       }
 
@@ -65,6 +77,58 @@
         //await - requires being run in an async environment
         await Promise.all(rolls);
         console.log(calculateDiceTotal());
+      }
+
+      function subtractPoints(points) {
+        let alertShown = true;
+        if (points === 50) {
+          alert("You got 50 points.\nScore has been reset.");
+          resetPoints();
+        } else if (points === 67) {
+          alert("You got 67 points.\nScore has been reset.");
+          resetPoints();
+        } else if (points === 100) {
+          alert("You got 100 points.\nScore has been reset.");
+          resetPoints();
+        } else if (points === 150) {
+          alert("You got 150 points.\nScore has been reset.");
+          resetPoints();
+        } else if (points === 200) {
+          alert("You got 200 points.\nScore has been reset.");
+          resetPoints();
+        }
+        alertShown = false;
+      }
+
+      function addPoints(points) {
+        //add points to the user if he reaches a certain number or something...
+        // could use modulus to do something with that could be cool. nvm
+        let goal1 = false;
+        let goal2 = false;
+        let goal3 = false;
+        let bonus = Math.round(10 * (1 - points / 250));
+        if (points >= 60 && !goal1) {
+          points += 5;
+          goal1 = true;
+        }
+        if (points >= 125 && !goal2) {
+          points += 5;
+          goal2 = true;
+        }
+        if (points >= 190 && !goal3) {
+          points += 5;
+          goal3 = true;
+        }
+      }
+      function winConditions(points) {
+        let alertShown = false;
+        if (points >= 250 && !alertShown) {
+          alert("You won!!");
+          alertShown = true;
+          resetPoints();
+        } else if (points === 47){
+          alert("You hit the secret number (47).\nYou win!");
+        }
       }
     </script>
   </body>

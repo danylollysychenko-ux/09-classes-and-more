@@ -1,8 +1,8 @@
 body {
   background-color: black;
 }
-.dice > img{
-    display: block;
+.dice > img {
+  display: block;
 }
 .dice {
   min-width: 100px;
@@ -18,17 +18,27 @@ body {
   gap: 10px;
 }
 
-.controls{
-    display: flex;
-    justify-content: center;
-    margin-top: 1em;
-}
-
-.controls #rollBtn{
-    font-size: 2em;
-}
-
-#game-total, #roll-total{
+.controls {
   display: flex;
   justify-content: center;
+  margin-top: 1em;
+  gap: 10px;
+}
+
+.controls #rollBtn {
+  font-size: 2em;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#game-total,
+#roll-total {
+  display: flex;
+  justify-content: center;
+}
+
+#resetBtn {
+  height: 50px;
+  width: 110px;
+  font-size: 2em;
+  font-family: 'Courier New', Courier, monospace;
 }
